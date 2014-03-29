@@ -19,6 +19,23 @@
 -- [2,3,4,5]
 --
 localMax :: Ord a => [a] -> [a]
-localMax = undefined
+localMax [] = []
+localMax [_] = []
+localMax [_, _] = []
+localMax (x:y:z:xs) = 
+  localMaxOrEmptyList x y z ++ localMax (y:z:xs)
 
-main = print $ localMax [2,2,1,5,4] -- [5]
+localMaxOrEmptyList :: Ord a => a -> a -> a -> [a]
+localMaxOrEmptyList x y z =
+  if isLocalMax x y z
+  then [y]
+  else []
+
+isLocalMax :: Ord a => a -> a -> a -> Bool
+isLocalMax x y z = y > x && y > z
+
+main = do
+  print $ localMax [2,2,1,5,4] -- [5]
+  print $ localMax [1000 .. 0] -- []
+  print $ localMax [3,2,1,4,2,5,3] -- [4,5]
+  print $ take 4 . localMax $ [0..] >>= (\y -> [y,y+2]) -- [2,3,4,5]
