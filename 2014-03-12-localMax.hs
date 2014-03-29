@@ -19,11 +19,9 @@
 -- [2,3,4,5]
 --
 localMax :: Ord a => [a] -> [a]
-localMax [] = []
-localMax [_] = []
-localMax [_, _] = []
 localMax (x:y:z:xs) = 
   localMaxOrEmptyList x y z ++ localMax (y:z:xs)
+localMax _ = []
 
 localMaxOrEmptyList :: Ord a => a -> a -> a -> [a]
 localMaxOrEmptyList x y z =
