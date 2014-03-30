@@ -21,7 +21,16 @@
 -- prop> \(NonEmpty(xs)) -> minimum xs == (fst . fromJust . minmax) xs
 -- prop> \(NonEmpty(xs)) -> maximum xs == (snd . fromJust . minmax) xs
 --
+-- Naive recursive implementation
 minmax :: Ord a => [a] -> Maybe (a,a)
-minmax = undefined
+minmax [] = Nothing
+minmax (x:xs) = minmaxHelper x x xs
+
+minmaxHelper :: Ord a => a -> a -> [a] -> Maybe (a,a)
+minmaxHelper currentMin currentMax [] = Just (currentMin, currentMax)
+minmaxHelper currentMin currentMax (x:xs) =
+  let newMin = if x < currentMin then x else currentMin
+      newMax = if x > currentMax then x else currentMax
+  in minmaxHelper newMin newMax xs
 
 main = print $ minmax [0..10]
