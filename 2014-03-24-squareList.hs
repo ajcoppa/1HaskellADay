@@ -12,4 +12,18 @@
 -- [[(),(),()],[(),(),()],[(),(),()]]
 --
 squareList :: Int -> a -> [a] -> [[a]] 
-squareList = undefined
+squareList size filler xs =
+  squareListHelper size size filler xs []
+
+squareListHelper :: Int -> Int -> a -> [a] -> [[a]] -> [[a]]
+squareListHelper _ 0 _ _ accum = accum
+squareListHelper size sizeRemaining filler xs accum =
+  let sourceList = xs ++ cycle [filler]
+      newXs = drop size xs
+      newAccum = accum ++ [take size sourceList]
+  in squareListHelper size (sizeRemaining - 1) filler newXs newAccum
+
+main = do
+  print $ squareList 2 0 [0..]
+  print $ squareList 2 0 [1]
+  print $ squareList 3 () $ repeat ()
