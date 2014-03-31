@@ -8,6 +8,7 @@
 
 import Data.List (groupBy)
 import Test.QuickCheck
+import Test.QuickCheck.Gen
 
 -- Preamble
 
@@ -27,9 +28,11 @@ newtype Board a = Board {getList :: [[a]]}
 -- prop> (1==) . length . group . (flip (:) <*> length) . map length $ getList bs
 --
 instance Arbitrary a => Arbitrary (Board a) where 
-  arbitrary = undefined
-
-
+  arbitrary = do
+    size <- suchThat arbitrary (>1)
+    as <- infiniteList
+    a <- arbitrary
+    return $ Board $ board size a as
 
 -- Just some extra content, it isn't useful for today's exercise
 
