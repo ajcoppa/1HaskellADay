@@ -23,24 +23,36 @@ import Test.QuickCheck
 -- (yes, it is the same behavior as 2048):
 -- http://gabrielecirulli.github.io/2048/
 --
--- >>> getList . pushTo West $ Square [[Just 1, Just 1], [Just 2, Just 2]]
+-- >>> getList . pushTo West $ Board [[Just 1, Just 1], [Just 2, Just 2]]
 -- [[Just 2,Nothing],[Just 3,Nothing]]
 --
--- >>> getList . pushTo North $ Square [[Just 1, Just 1], [Just 2, Just 2]]
+-- >>> getList . pushTo North $ Board [[Just 1, Just 1], [Just 2, Just 2]]
 -- [[Just 1,Just 1],[Just 2,Just 2]]
 --
--- >>> getList . pushTo West $ Square [[Just 1, Just 1], [Just 2, Just 2]]
+-- >>> getList . pushTo West $ Board [[Just 1, Just 1], [Just 2, Just 2]]
 -- [[Just 2,Nothing],[Just 3,Nothing]]
 --
 -- prop> :{ \(d, bs) ->
 --    (==)
 --    <$> map compact . getList . viewFrom d
---    <*> catMaybes . videFrom d . pushTo d
+--    <*> catMaybes . viewFrom d . pushTo d
 --     $  bs
 -- :}
 pushTo :: (Enum a, Eq a) => Direction -> Board (Maybe a) -> Board (Maybe a)
-pushTo = undefined
+pushTo d board =
+  let rowCount = length . getList $ board
+  in viewFrom d . Board .
+    map (padRowWithNothings rowCount) .
+    map (map Just) .
+    map compact .
+    getList . viewFrom d
+    $ board
 
+padRowWithNothings :: Int -> [Maybe a] -> [Maybe a]
+padRowWithNothings n xs =
+  xs ++ replicate (n - length xs) Nothing
+
+main = print ""
 
 -- Old stuff
 
