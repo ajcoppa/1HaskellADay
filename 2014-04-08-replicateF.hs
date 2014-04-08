@@ -12,4 +12,6 @@ module HAD.Y2014.M04.D08.Exercise where
    prop> replicate 10 x == replicateF 10 (x:) []
 -}
 replicateF :: Int -> (a -> a) -> a -> a
-replicateF = undefined
+replicateF n f = (!! n) . iterate f
+
+main = print ""
