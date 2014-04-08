@@ -15,4 +15,8 @@ module HAD.Y2014.M04.D07.Exercise where
    [0,1,2,3]
 -}
 braid :: [a] -> [a] -> [a]
-braid = undefined
+braid [] ys = []
+braid xs [] = []
+braid (x:xs) (y:ys) = x : y : braid xs ys
+
+main = print ""
