@@ -6,7 +6,7 @@ import Control.Applicative
 -- zipBinary [(+)] [2,2,2] [4,4,4] == [6]
 
 zipBinary :: [a->b->c] -> [a] -> [b] -> [c]
-zipBinary ops xs ys = undefined
+zipBinary = zipWith3 id
 
 main = print $
   zipBinary (cycle [(+), (*)]) [1 .. 4] [2..5] -- [3, 6, 7, 20]
