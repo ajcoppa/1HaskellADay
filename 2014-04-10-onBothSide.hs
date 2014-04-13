@@ -19,6 +19,6 @@ import Control.Monad (join)
 
 -- They spoiled this by tweeting out the solution. :(
 onBothSide :: (a -> a -> b) -> a -> b
-onBothSide f x = join f x
+onBothSide = join
 
 main = print ""
