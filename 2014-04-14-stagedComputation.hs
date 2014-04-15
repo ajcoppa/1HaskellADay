@@ -14,6 +14,11 @@
 
 -}
 stagedComputation :: [a->a] -> a -> [a]
-stagedComputation = undefined
+stagedComputation fs x = tail $ scanl (flip ($)) x fs
 
-main = print ""
+stagedComputationPF :: [a->a] -> a -> [a]
+stagedComputationPF = (tail .) . (flip $ scanl $ flip ($))
+
+main = do
+  print $ stagedComputationPF [(+1), (*2), subtract 3] 4
+  print $ stagedComputationPF [(++) "el", (:) 'h'] "lo"
