@@ -1,3 +1,5 @@
+import Control.Monad (replicateM)
+
 {- | combinations
    Builds all the combinations of length n of the elements of the initial list.
 
@@ -13,4 +15,6 @@
    [""]
 -}
 combinations :: Int -> [a] -> [[a]]
-combinations = undefined
+combinations = replicateM
+
+main = print ""
