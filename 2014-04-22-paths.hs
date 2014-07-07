@@ -14,4 +14,5 @@ import Data.Tree
    ["had","hell"]
 -}
 paths :: Tree a -> [[a]]
-paths = undefined
+paths (Node x []) = [[x]]
+paths (Node x subtrees) = map (x:) (concatMap paths subtrees)
